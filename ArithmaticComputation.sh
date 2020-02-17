@@ -52,15 +52,15 @@ done
 #SORTING THE COMPUTATION RESULT IN ASCENDING ORDER
 for (( index=0; index<${#Array[@]}; index++ ))
 do
-   for (( index1=$index+1; index1<${#Array[@]}; index1++ ))
-   do
-      if (( $(echo "${Array[index]} > ${Array[index1]}" |bc -l) ))
-      then
-         temp=${Array[index]}
-         Array[index]=${Array[index1]}
-         Array[index1]=$temp
-      fi
-   done
+	for (( index1=$index+1; index1<${#Array[@]}; index1++ ))
+	do
+		if (( $(echo "${Array[index]} > ${Array[index1]}" |bc -l) ))
+		then
+			temp=${Array[index]}
+			Array[index]=${Array[index1]}
+			Array[index1]=$temp
+		fi
+	done
 done
 
 #PRINT ARRAY VALUES
