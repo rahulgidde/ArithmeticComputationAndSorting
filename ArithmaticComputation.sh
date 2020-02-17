@@ -5,6 +5,9 @@ read -p  "Enter Number: " input1
 read -p  "Enter Number: " input2
 read -p  "Enter Number: " input3
 
+#VARIABLE
+index=0
+
 #COMPUTING FIRST EXPRESSTION
 result1=`echo "scale=2; $input1 + $input2 * $input3" | bc`
 
@@ -21,8 +24,14 @@ result4=`echo "scale=2; $input1 % $input2 + $input3" | bc`
 declare -A Dictionary
 
 #STORE COMPUTATION RESULTS IN DICTIONARY
-Dictionary[1]=$result1
-Dictionary[2]=$result2
-Dictionary[3]=$result3
-Dictionary[4]=$result4
+Dictionary[$((index++))]=$result1
+Dictionary[$((index++))]=$result2
+Dictionary[$((index++))]=$result3
+Dictionary[$((index++))]=$result4
+
+#STORE DICTIONARY VALUES INTO ARRAY
+for (( index1=0; index1<=${#Dictionary[@]}; index1++ ))
+do
+	Array[$index1]=${Dictionary[$index1]}
+done
 
