@@ -21,47 +21,47 @@ result3=`echo "scale=2; $input3 + $input1 / $input2" | bc`
 result4=`echo "scale=2; $input1 % $input2 + $input3" | bc`
 
 #DECLARE DICTIONARY
-declare -A Dictionary
+declare -A results
 
 #STORE COMPUTATION RESULTS IN DICTIONARY
-Dictionary[$((index++))]=$result1
-Dictionary[$((index++))]=$result2
-Dictionary[$((index++))]=$result3
-Dictionary[$((index++))]=$result4
+results[$((index++))]=$result1
+results[$((index++))]=$result2
+results[$((index++))]=$result3
+results[$((index++))]=$result4
 
 #STORE DICTIONARY VALUES INTO ARRAY
-for (( index1=0; index1<=${#Dictionary[@]}; index1++ ))
+for (( index1=0; index1<=${#results[@]}; index1++ ))
 do
-	Array[$index1]=${Dictionary[$index1]}
+	sortingResults[$index1]=${results[$index1]}
 done
 
 #SORTING THE COMPUTATION RESULT IN DECENDING ORDER
-for (( index=0; index<${#Array[@]}; index++ ))
+for (( index=0; index<${#sortingResults[@]}; index++ ))
 do
-	for (( index1=$index+1; index1<${#Array[@]}; index1++ ))
+	for (( index1=$index+1; index1<${#sortingResults[@]}; index1++ ))
 	do
-		if (( $(echo "${Array[index]} < ${Array[index1]}" |bc -l) ))
+		if (( $(echo "${sortingResults[index]} < ${sortingResults[index1]}" | bc -l) ))
 		then
-			temp=${Array[index]}
-			Array[index]=${Array[index1]}
-			Array[index1]=$temp
+			temp=${sortingResults[index]}
+			sortingResults[index]=${sortingResults[index1]}
+			sortingResults[index1]=$temp
 		fi
 	done
 done
 
 #SORTING THE COMPUTATION RESULT IN ASCENDING ORDER
-for (( index=0; index<${#Array[@]}; index++ ))
+for (( index=0; index<${#sortingResults[@]}; index++ ))
 do
-	for (( index1=$index+1; index1<${#Array[@]}; index1++ ))
+	for (( index1=$index+1; index1<${#sortingResults[@]}; index1++ ))
 	do
-		if (( $(echo "${Array[index]} > ${Array[index1]}" |bc -l) ))
+		if (( $(echo "${sortingResults[index]} > ${sortingResults[index1]}" | bc -l) ))
 		then
-			temp=${Array[index]}
-			Array[index]=${Array[index1]}
-			Array[index1]=$temp
+			temp=${sortingResults[index]}
+			sortingResults[index]=${sortingResults[index1]}
+			sortingResults[index1]=$temp
 		fi
 	done
 done
 
 #PRINT ARRAY VALUES
-echo ${Array[@]}
+echo ${sortingResults[@]}
